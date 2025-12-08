@@ -1,6 +1,7 @@
 package ifsc.joe.ui;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Classe responsável pela configuração e exibição da janela principal do jogo.
@@ -10,9 +11,12 @@ public class JanelaJogo {
     private static final String TITULO = "Java of Empires";
     private final JFrame frame;
     private final PainelControles painelControles;
+    private final Tela telaJogo;
+
 
     public JanelaJogo() {
         this.frame = new JFrame(TITULO);
+        this.telaJogo = new Tela(); // Instância de Tela
         this.painelControles = new PainelControles();
 
         this.configurarJanela();
@@ -24,9 +28,14 @@ public class JanelaJogo {
     private void configurarJanela() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setContentPane(painelControles.getPainelPrincipal());
+
+        JPanel painelPrincipal = new JPanel(new BorderLayout()); //painel principal para organizar a Tela e o PainelControles
+
+        painelPrincipal.add(painelControles.getPainelPrincipal(), BorderLayout.SOUTH);
+
+        frame.setContentPane(painelPrincipal);
         frame.pack();
-        frame.setLocationRelativeTo(null); // Centralizar na tela
+        frame.setLocationRelativeTo(null); // centralizar na tela
     }
 
     /**
