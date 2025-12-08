@@ -4,6 +4,8 @@ import ifsc.joe.enums.Direcao;
 
 import javax.swing.*;
 import java.util.Random;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Classe responsável por gerenciar os controles e interações da interface.
