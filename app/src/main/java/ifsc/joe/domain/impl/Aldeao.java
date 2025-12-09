@@ -1,72 +1,48 @@
 package ifsc.joe.domain.impl;
 
 import ifsc.joe.enums.Direcao;
+import ifsc.joe.domain.impl.Personagem;
+import ifsc.joe.domain.api.Guerreiro;
+import ifsc.joe.domain.api.Coletador;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
+import java.util.Set;
 
-public class Aldeao {
+public class Aldeao extends Personagem implements Guerreiro, Coletador {
 
-    public static final String NOME_IMAGEM = "aldeao";
-
-    private int posX, posY;
-    private boolean atacando;
-    private Image icone;
+    // Constantes de Aldeão (serão movidas para Constantes.java depois)
+    private static final int VIDA_MAXIMA = 100;
+    private static final int ATAQUE = 10;
+    private static final int ALCANCE_ATAQUE = 50; // 50px
+    private static final double CHANCE_ESQUIVA = 0.10; // 10%
+    private static final int VELOCIDADE = 10;
 
     public Aldeao(int x, int y) {
-        this.icone = this.carregarImagem(NOME_IMAGEM);
-        this.posX = x;
-        this.posY = y;
-        this.atacando = false;
+        super(x, y, "aldeao", VIDA_MAXIMA, ATAQUE, ALCANCE_ATAQUE, CHANCE_ESQUIVA, VELOCIDADE);
     }
 
-    /**
-     * Desenhando o Aldeão, nas coordenadas X e Y, com a imagem 'icone'
-     * no JPanel 'pai'
-     *
-     * @param g objeto do JPanel que será usado para desenhar o Aldeão
-     */
-    public void desenhar(Graphics g, JPanel painel) {
-        // verificando qual imagem carregar
-        this.icone = this.carregarImagem(NOME_IMAGEM + (atacando ? "2" : ""));
-        // desenhando de fato a imagem no pai
-        g.drawImage(this.icone, this.posX, this.posY, painel);
+    // O método desenhar() foi movido para Personagem.java.
+    // Ele será sobrescrito na Fase 8 para incluir a barra de vida.
+
+    // O método mover() foi movido para Personagem.java.
+
+
+    @Override
+    public void atacar(Set<Personagem> alvos) {
+        // Alterna o estado de ataque para o efeito visual
+        this.alternarEstadoAtaque();
+
+        // A lógica de ataque real será implementada na Fase 4.
     }
 
-    /**
-     * Atualiza as coordenadas X e Y do personagem
-     *
-     * @param direcao indica a direcao a ir.
-     */
-    public void mover(Direcao direcao, int maxLargura, int maxAltura) {
-        switch (direcao) {
-            case CIMA     -> this.posY -= 10;
-            case BAIXO    -> this.posY += 10;
-            case ESQUERDA -> this.posX -= 10;
-            case DIREITA  -> this.posX += 10;
-        }
+    // O método carregarImagem() foi movido para Personagem.java.
 
-        //Não deixa a imagem ser desenhada fora dos limites do JPanel pai
-        this.posX = Math.min(Math.max(0, this.posX), maxLargura - this.icone.getWidth(null));
-        this.posY = Math.min(Math.max(0, this.posY), maxAltura - this.icone.getHeight(null));
-    }
-
-
-    public void atacar() {
-        this.atacando = !this.atacando;
-    }
-
-    /**
-     * Metodo auxiliar para carregar uma imagem do disco
-     *
-     * @param imagem Caminho da imagem
-     * @return Retorna um objeto Image
-     */
-    private Image carregarImagem(String imagem) {
-        return new ImageIcon(Objects.requireNonNull(
-                getClass().getClassLoader().getResource("./"+imagem+".png")
-        )).getImage();
+    @Override
+    public void coletar(Object recurso) {
+        // Lógica de coleta será implementada na Fase 9
+        System.out.println("Aldeão coletando recurso: " + recurso);
     }
 
 }

@@ -72,7 +72,6 @@ public class Tela extends JPanel {
         //TODO preciso ser melhorado
 
         // Percorrendo a lista de aldeões e pedindo para todos atacarem
-        this.aldeoes.forEach(Aldeao::atacar);
 
         // Fazendo o JPanel ser redesenhado
         this.repaint();
