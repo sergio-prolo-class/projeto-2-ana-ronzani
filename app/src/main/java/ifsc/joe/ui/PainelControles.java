@@ -52,10 +52,6 @@ public class PainelControles {
      * Configura todos os listeners dos botões de movimento
      */
     private void configurarBotoesMovimento() {
-        buttonCima.addActionListener(e -> getTela().movimentarAldeoes(Direcao.CIMA));
-        buttonBaixo.addActionListener(e -> getTela().movimentarAldeoes(Direcao.BAIXO));
-        buttonEsquerda.addActionListener(e -> getTela().movimentarAldeoes(Direcao.ESQUERDA));
-        buttonDireita.addActionListener(e -> getTela().movimentarAldeoes(Direcao.DIREITA));
     }
 
     /**
@@ -79,7 +75,6 @@ public class PainelControles {
      * Configura o listener do botão de ataque
      */
     private void configurarBotaoAtaque() {
-        atacarButton.addActionListener(e -> getTela().atacarAldeoes());
     }
 
     /**
