@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class Aldeao extends Personagem implements Guerreiro, Coletador {
 
+    //constantes do aldeao
     private static final int VIDA_MAXIMA = 100;
     private static final int ATAQUE = 10;
     private static final int ALCANCE_ATAQUE = 50; // 50px
@@ -32,6 +33,25 @@ public class Aldeao extends Personagem implements Guerreiro, Coletador {
         // Alterna o estado de ataque para o efeito visual
         this.alternarEstadoAtaque();
 
+        // ataca todos os inimigos proximos ao mesmo tempo
+        for (Personagem alvo : alvos){
+            // nao ataca a si mesmo e nem quem ja esta morto
+            if (alvo != this && !alvo.estaMorto()){
+                // calcula a distancia entre o atacante e o alvo
+                double distancia = calcularDistancia(alvo);
+
+                // ataque só causa dano se a distância for menor ou igual o alcance
+                if (distancia <= this.alcanceAtaque){
+
+                    // aplica dano baseado no atrtibuto ataque e verifica a esquiva
+                    boolean danoAplicado = alvo.sofrerDano(this.ataque);
+
+                    if (!danoAplicado){
+                        System.out.println("ESQUIVOU! " + alvo.getClass().getSimpleName() + "esquivou do ataque de Aldeão.");
+                    }
+                }
+            }
+        }
     }
 
     // O método carregarImagem() foi movido para Personagem.java.

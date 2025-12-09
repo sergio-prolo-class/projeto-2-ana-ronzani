@@ -76,10 +76,25 @@ public abstract class Personagem {
     }
 
     /**
-     * Alterna o estado de ataque.
+     * alterna o estado de ataque
      */
     public void alternarEstadoAtaque() {
         this.atacando = !this.atacando;
+    }
+
+    /**
+     * calcula a distância euclidiana entre este personagem e um alvo
+     * @param alvo o personagem alvo
+     * @return a distância em pixels
+     */
+    protected double calcularDistancia(Personagem alvo) {
+        // usa o centro do personagem para o calculo
+        int x1 = this.posX + this.icone.getWidth(null) / 2;
+        int y1 = this.posY + this.icone.getHeight(null) / 2;
+        int x2 = alvo.getPosX() + alvo.icone.getWidth(null) / 2;
+        int y2 = alvo.getPosY() + alvo.icone.getHeight(null) / 2;
+
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
     /**

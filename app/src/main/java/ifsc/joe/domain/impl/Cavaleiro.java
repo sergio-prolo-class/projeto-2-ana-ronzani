@@ -23,5 +23,24 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
         // Alterna o estado de ataque para o efeito visual
         this.alternarEstadoAtaque();
 
+        // cavaleiro ataca todos os inimigos próximos ao mesmo tempo
+        for (Personagem alvo : alvos) {
+            // nao ataca a si mesmo e nem quem ja esta morto
+            if (alvo != this && !alvo.estaMorto()) {
+                // calcula a distancia entre o atacante e o alvo
+                double distancia = calcularDistancia(alvo);
+
+                // ataque só causa dano se a distância for menor ou igual o alcance
+                if (distancia <= this.alcanceAtaque) {
+                    // aplica dano baseado no atrtibuto ataque e verifica a esquiva
+                    boolean danoAplicado = alvo.sofrerDano(this.ataque);
+
+                    if (!danoAplicado) {
+                        System.out.println("ESQUIVOU! " + alvo.getClass().getSimpleName() + " esquivou do ataque de Cavaleiro.");
+                    }
+                }
+            }
+        }
+
     }
 }

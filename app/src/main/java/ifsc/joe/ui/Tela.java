@@ -9,12 +9,13 @@ import ifsc.joe.enums.Direcao;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Tela extends JPanel {
 
     private final Set<Personagem> personagens;
+    private final Map<Class<? extends Personagem>, Integer> baixas;
+
 
     public Tela() {
 
@@ -22,6 +23,8 @@ public class Tela extends JPanel {
 
         this.setBackground(Color.white);
         this.personagens = new HashSet<>();
+        this.baixas = new HashMap<>();
+
     }
 
     /**
@@ -113,7 +116,38 @@ public class Tela extends JPanel {
                 .map(p -> (Guerreiro) p)
                 .forEach(guerreiro -> guerreiro.atacar(alvos));
 
+        // para verificar se vida <= 0 e remover os personagens que morreram
+        removerMortos();
+
         // Fazendo o JPanel ser redesenhado
         this.repaint();
+    }
+    /**
+     * verifica e remove personagens que estão mortos (vidaAtual <= 0)
+     */
+    private void removerMortos() {
+        Iterator<Personagem> iterator = this.personagens.iterator();
+        while (iterator.hasNext()) {
+            Personagem personagem = iterator.next();
+            if (personagem.estaMorto()) {
+                //remove personagem morto da coleçao
+                iterator.remove();
+
+                // contabilizar
+                Class<? extends Personagem> tipo = personagem.getClass();
+                baixas.put(tipo, baixas.getOrDefault(tipo, 0) + 1);
+
+
+                System.out.println("BAIXA: " + tipo.getSimpleName() + " foi eliminado. Total de baixas: " + baixas.get(tipo));
+            }
+        }
+    }
+
+    /**
+     * retorna a coleção de personagens;
+     * @return Set de Personagens.
+     */
+    public Set<Personagem> getPersonagens() {
+        return personagens;
     }
 }
