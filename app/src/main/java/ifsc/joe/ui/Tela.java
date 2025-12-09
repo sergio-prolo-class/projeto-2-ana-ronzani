@@ -6,6 +6,7 @@ import ifsc.joe.domain.impl.Arqueiro;
 import ifsc.joe.domain.impl.Cavaleiro;
 import ifsc.joe.domain.impl.Personagem;
 import ifsc.joe.enums.Direcao;
+import ifsc.joe.enums.TipoSelecao;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,7 @@ public class Tela extends JPanel {
 
     private final Set<Personagem> personagens;
     private final Map<Class<? extends Personagem>, Integer> baixas;
+    private TipoSelecao filtroSelecao;
 
 
     public Tela() {
@@ -24,7 +26,7 @@ public class Tela extends JPanel {
         this.setBackground(Color.white);
         this.personagens = new HashSet<>();
         this.baixas = new HashMap<>();
-
+        this.filtroSelecao = TipoSelecao.TODOS; // padrao: todos selecionados
     }
 
     /**
@@ -89,10 +91,11 @@ public class Tela extends JPanel {
      * @param direcao direcao para movimentar
      */
     public void movimentarPersonagens(Direcao direcao) {
-        //TODO preciso ser melhorado
-        // ADICIONAR FILTRO DE SELECAO !!!!!!!
 
-        this.personagens.forEach(personagem -> personagem.mover(direcao, this.getWidth(), this.getHeight()));
+        // aplica o filtro de seleção
+        this.personagens.stream()
+                .filter(this::aplicarFiltro)
+                .forEach(personagem -> personagem.mover(direcao, this.getWidth(), this.getHeight()));
 
         // repintar o JPanel
         this.repaint();
@@ -112,6 +115,7 @@ public class Tela extends JPanel {
 
         // Percorrendo a lista de personagens e pedindo para os Guerreiros atacarem
         this.personagens.stream()
+                .filter(this::aplicarFiltro) // aplica o filtro de seleção
                 .filter(p -> p instanceof Guerreiro)
                 .map(p -> (Guerreiro) p)
                 .forEach(guerreiro -> guerreiro.atacar(alvos));
@@ -149,5 +153,27 @@ public class Tela extends JPanel {
      */
     public Set<Personagem> getPersonagens() {
         return personagens;
+    }
+
+    /**
+     * define o filtro de seleçao atual
+     * @param filtro O novo tipo de seleçao
+     */
+    public void setFiltroSelecao(TipoSelecao filtro) {
+        this.filtroSelecao = filtro;
+    }
+
+    /**
+     * aplica o filtro de seleçao baseado no tipo de personagem
+     * @param personagem O personagem a ser verificado
+     * @return true se o personagem deve ser incluído na açao, false caso contrário
+     */
+    private boolean aplicarFiltro(Personagem personagem) {
+        return switch (this.filtroSelecao) {
+            case TODOS -> true;
+            case ALDEAO -> personagem instanceof Aldeao;
+            case ARQUEIRO -> personagem instanceof Arqueiro;
+            case CAVALEIRO -> personagem instanceof Cavaleiro;
+        };
     }
 }
