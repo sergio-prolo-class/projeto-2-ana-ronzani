@@ -47,13 +47,55 @@ public abstract class Personagem {
      * @param g Objeto Graphics.
      * @param painel O JPanel pai.
      */
+    /**
+     * desenha o personagem no painel, incluindo a barra de vida
+     * @param g Objeto Graphics.
+     * @param painel O JPanel pai.
+     */
     public void desenhar(Graphics g, JPanel painel) {
-        // Lógica para alternar a imagem de ataque (se houver imagem "nomeImagemBase2.png")
+        // Lógica para alternar a imagem de ataque
         String nomeImagem = this.nomeImagemBase + (atacando ? "2" : "");
         this.icone = this.carregarImagem(nomeImagem);
 
-        // Desenha a imagem
+        // Desenha a imagem do personagem
         g.drawImage(this.icone, this.posX, this.posY, painel);
+
+        // Desenha a barra de vida
+        desenharBarraVida(g);
+    }
+
+    /**
+     * desenha a barra de vida acima do personagem
+     * @param g Objeto Graphics.
+     */
+    private void desenharBarraVida(Graphics g) {
+        int barraLargura = this.icone.getWidth(null);
+        int barraAltura = 5;
+        int barraX = this.posX;
+        int barraY = this.posY - barraAltura - 2; // 2 pixels acima do personagem
+
+        // largura da vida atual
+        int vidaLargura = (int) (((double) this.vidaAtual / this.vidaMaxima) * barraLargura);
+
+        // cor da barra de vida
+        Color cor;
+        double percentualVida = (double) this.vidaAtual / this.vidaMaxima;
+
+        if (percentualVida > 0.75) {
+            cor = Color.GREEN; // Verde (75-100%)
+        } else if (percentualVida > 0.25) {
+            cor = Color.YELLOW; // Amarelo (25-75%)
+        } else {
+            cor = Color.RED; // Vermelho (<25%)
+        }
+
+        // desenha o fundo da barra
+        g.setColor(Color.BLACK);
+        g.fillRect(barraX, barraY, barraLargura, barraAltura);
+
+        // desenha a vida atual
+        g.setColor(cor);
+        g.fillRect(barraX, barraY, vidaLargura, barraAltura);
     }
 
     /**
