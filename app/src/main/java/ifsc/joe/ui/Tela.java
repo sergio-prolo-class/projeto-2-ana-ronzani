@@ -1,21 +1,26 @@
 package ifsc.joe.ui;
 
+import ifsc.joe.domain.Personagem;
+import ifsc.joe.domain.api.Coletador;
 import ifsc.joe.domain.api.Guerreiro;
 import ifsc.joe.domain.impl.Aldeao;
 import ifsc.joe.domain.impl.Arqueiro;
 import ifsc.joe.domain.impl.Cavaleiro;
-import ifsc.joe.domain.impl.Personagem;
+import ifsc.joe.domain.impl.Recurso;
 import ifsc.joe.enums.Direcao;
+import ifsc.joe.enums.TipoRecurso;
 import ifsc.joe.enums.TipoSelecao;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Tela extends JPanel {
 
     private final Set<Personagem> personagens;
     private final Map<Class<? extends Personagem>, Integer> baixas;
+    private final List<Recurso> recursos;
     private TipoSelecao filtroSelecao;
 
 
@@ -26,7 +31,13 @@ public class Tela extends JPanel {
         this.setBackground(Color.white);
         this.personagens = new HashSet<>();
         this.baixas = new HashMap<>();
+        this.recursos = new ArrayList<>();
         this.filtroSelecao = TipoSelecao.TODOS; // padrao: todos selecionados
+
+        // adicionando alguns recursos pra teste
+        recursos.add(new Recurso(TipoRecurso.MADEIRA, 50, 50, 100));
+        recursos.add(new Recurso(TipoRecurso.OURO, 300, 150, 50));
+        recursos.add(new Recurso(TipoRecurso.COMIDA, 500, 50, 200));
     }
 
     /**
@@ -41,6 +52,9 @@ public class Tela extends JPanel {
 
         // percorrendo a lista de personagens e pedindo para cada um se desenhar na tela
         this.personagens.forEach(personagem -> personagem.desenhar(g, this));
+
+        // desenhando recursos
+        this.recursos.forEach(recurso -> recurso.desenhar(g, this));
 
         // liberando o contexto gráfico
         g.dispose();
@@ -99,6 +113,51 @@ public class Tela extends JPanel {
 
         // repintar o JPanel
         this.repaint();
+    }
+
+    /**
+     * Executa a ação de coleta para todos os personagens Coletadores.
+     */
+    public void coletarRecursos() {
+        // Remove recursos esgotados
+        this.recursos.removeIf(Recurso::estaEsgotado);
+
+        // Percorre os personagens que são Coletadores e estão selecionados
+        this.personagens.stream()
+                .filter(this::aplicarFiltro)
+                .filter(p -> p instanceof Coletador)
+                .map(p -> (Coletador) p)
+                .forEach(coletador -> {
+                    // Encontra o recurso mais próximo
+                    Recurso recursoProximo = encontrarRecursoProximo((Personagem) coletador);
+
+                    if (recursoProximo != null) {
+                        // Verifica proximidade (usando um alcance fixo para coleta, ex: 50px)
+                        double distancia = ((Personagem) coletador).calcularDistancia(recursoProximo.getPosX(), recursoProximo.getPosY(), recursoProximo.getIcone());
+                        if (distancia <= 50) { // Alcance de coleta
+                            coletador.coletar(recursoProximo);
+                        }
+                    }
+                });
+
+        this.repaint();
+    }
+
+    /**
+     * Encontra o recurso mais próximo de um personagem.
+     */
+    private Recurso encontrarRecursoProximo(Personagem personagem) {
+        Recurso maisProximo = null;
+        double menorDistancia = Double.MAX_VALUE;
+
+        for (Recurso recurso : recursos) {
+            double distancia = personagem.calcularDistancia(recurso.getPosX(), recurso.getPosY(), recurso.getIcone());
+            if (distancia < menorDistancia) {
+                menorDistancia = distancia;
+                maisProximo = recurso;
+            }
+        }
+        return maisProximo;
     }
 
     /**

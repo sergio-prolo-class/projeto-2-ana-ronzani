@@ -1,4 +1,4 @@
-package ifsc.joe.domain.impl;
+package ifsc.joe.domain;
 
 import ifsc.joe.enums.Direcao;
 
@@ -135,6 +135,23 @@ public abstract class Personagem {
         int y1 = this.posY + this.icone.getHeight(null) / 2;
         int x2 = alvo.getPosX() + alvo.icone.getWidth(null) / 2;
         int y2 = alvo.getPosY() + alvo.icone.getHeight(null) / 2;
+
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    /**
+     * Calcula a distância euclidiana entre este personagem e um ponto (Recurso).
+     * @param x2 Coordenada X do alvo.
+     * @param y2 Coordenada Y do alvo.
+     * @param iconeAlvo Ícone do alvo para calcular o centro.
+     * @return A distância em pixels.
+     */
+    public double calcularDistancia(int x2, int y2, Image iconeAlvo) {
+        // Usa o centro do personagem para o cálculo
+        int x1 = this.posX + this.icone.getWidth(null) / 2;
+        int y1 = this.posY + this.icone.getHeight(null) / 2;
+        x2 = x2 + iconeAlvo.getWidth(null) / 2;
+        y2 = y2 + iconeAlvo.getHeight(null) / 2;
 
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }

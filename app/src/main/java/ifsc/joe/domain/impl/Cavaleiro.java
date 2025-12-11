@@ -1,5 +1,6 @@
 package ifsc.joe.domain.impl;
 
+import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.api.ComMontaria;
 import ifsc.joe.domain.api.Guerreiro;
 

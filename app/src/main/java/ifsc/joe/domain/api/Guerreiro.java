@@ -1,6 +1,6 @@
 package ifsc.joe.domain.api;
 
-import ifsc.joe.domain.impl.Personagem;
+import ifsc.joe.domain.Personagem;
 import java.util.Set;
 
 /**
