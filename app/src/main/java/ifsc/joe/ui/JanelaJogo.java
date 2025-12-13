@@ -17,7 +17,7 @@ public class JanelaJogo {
     public JanelaJogo() {
         this.frame = new JFrame(TITULO);
         this.telaJogo = new Tela(); // Instância de Tela
-        this.painelControles = new PainelControles();
+        this.painelControles = new PainelControles(telaJogo);
 
         this.configurarJanela();
     }
@@ -31,6 +31,7 @@ public class JanelaJogo {
 
         JPanel painelPrincipal = new JPanel(new BorderLayout()); //painel principal para organizar a Tela e o PainelControles
 
+        painelPrincipal.add(telaJogo, BorderLayout.CENTER); // add a tela no centro
         painelPrincipal.add(painelControles.getPainelPrincipal(), BorderLayout.SOUTH);
 
         frame.setContentPane(painelPrincipal);

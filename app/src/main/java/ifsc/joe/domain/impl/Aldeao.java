@@ -1,5 +1,6 @@
 package ifsc.joe.domain.impl;
 
+import ifsc.joe.domain.Constantes;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.api.Guerreiro;
 import ifsc.joe.domain.api.Coletador;
@@ -9,19 +10,16 @@ import java.util.Set;
 public class Aldeao extends Personagem implements Guerreiro, Coletador {
 
     //constantes do aldeao
-    private static final int VIDA_MAXIMA = 100;
-    private static final int ATAQUE = 10;
-    private static final int ALCANCE_ATAQUE = 50; // 50px
-    private static final double CHANCE_ESQUIVA = 0.10; // 10%
-    private static final int VELOCIDADE = 10;
-
     public Aldeao(int x, int y) {
-        super(x, y, "aldeao", VIDA_MAXIMA, ATAQUE, ALCANCE_ATAQUE, CHANCE_ESQUIVA, VELOCIDADE);
+        super(x, y, "aldeao",
+                Constantes.ALDEAO_VIDA_MAXIMA,
+                Constantes.ALDEAO_ATAQUE,
+                Constantes.ALDEAO_ALCANCE_ATAQUE,
+                Constantes.ALDEAO_CHANCE_ESQUIVA,
+                Constantes.ALDEAO_VELOCIDADE);
     }
 
-    // O método desenhar() foi movido para Personagem.java.
-
-    // O método mover() foi movido para Personagem.java.
+    // Os métodos desenhar() e mover foram movidos para Personagem.java.
 
 
     @Override
