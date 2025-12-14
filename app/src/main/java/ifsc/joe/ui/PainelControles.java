@@ -68,28 +68,11 @@ public class PainelControles {
      */
     private void initComponents() {
         // Criar painel principal
-        painelPrincipal = new JPanel(new GridBagLayout());
-        painelPrincipal.setPreferredSize(new Dimension(800, 600));
-        painelPrincipal.setMinimumSize(new Dimension(800, 600));
-        painelPrincipal.setMaximumSize(new Dimension(800, 600));
-
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        // Adicionar JanelaJogo (Tela) à esquerda
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        painelPrincipal.add(JanelaJogo, gbc);
-
-        // Criar painel de controles à direita
-        JPanel painelControles = criarPainelControles();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        painelPrincipal.add(painelControles, gbc);
+        // O painel principal agora conterá apenas os controles, pois a divisão 50/50 será feita em JanelaJogo.java
+        painelPrincipal = criarPainelControles();
+        // Definir um tamanho mínimo para que o JSplitPane funcione corretamente
+        painelPrincipal.setMinimumSize(new Dimension(400, 600));
+        painelPrincipal.setPreferredSize(new Dimension(400, 600));
     }
 
     /**

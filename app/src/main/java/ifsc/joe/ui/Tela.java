@@ -170,10 +170,9 @@ public class Tela extends JPanel {
                     Recurso recursoProximo = encontrarRecursoProximo((Personagem) coletador);
 
                     if (recursoProximo != null) {
-                        // Verifica proximidade (usando um alcance fixo para coleta, ex: 50px)
+                        // Verifica proximidade (usando a constante de alcance de coleta)
                         double distancia = ((Personagem) coletador).calcularDistancia(recursoProximo.getPosX(), recursoProximo.getPosY(), recursoProximo.getIcone());
-                        if (distancia <= 50) { // Alcance de coleta
-                            coletador.coletar(recursoProximo);
+                        if (distancia <= Constantes.ALCANCE_COLETA) { // Alcance de coleta                            coletador.coletar(recursoProximo);
                         }
                     }
                 });

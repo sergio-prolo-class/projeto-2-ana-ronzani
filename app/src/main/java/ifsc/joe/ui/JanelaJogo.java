@@ -32,14 +32,22 @@ public class JanelaJogo {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
+        // usando JSplitPane para dividir a tela em duas partes iguais (horizontalmente)
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, this.telaJogo, painelControles.getPainelPrincipal());
+        splitPane.setResizeWeight(0.5); // define a divisão em 50/50
+        splitPane.setDividerSize(0); // remove a barra divisória
+        splitPane.setEnabled(false); // impede que o usuário redimensione
 
-        JPanel painelPrincipal = new JPanel(new BorderLayout()); //painel principal para organizar a Tela e o PainelControles
+        frame.setContentPane(splitPane);
 
-        painelPrincipal.add(this.telaJogo, BorderLayout.CENTER); // add a tela no centro
-        painelPrincipal.add(painelControles.getPainelPrincipal(), BorderLayout.SOUTH); // add o painel de controles ao sul da tela
-        frame.setContentPane(painelPrincipal);
+        // define o tamanho total da janela (Tela + PainelControles)
+        // LARGURA_TELA é 800. para 50/50, a largura total deve ser 1600.
+        Dimension tamanhoTotal = new Dimension(Constantes.LARGURA_TELA * 2, Constantes.ALTURA_TELA);
+        frame.setPreferredSize(tamanhoTotal);
 
-        this.telaJogo.setPreferredSize(new Dimension(Constantes.LARGURA_TELA, Constantes.ALTURA_TELA)); // define o tamanho preferido da Tela usando as constantes
+        // garantir que a Tela e o PainelControles tenham o tamanho definido
+        this.telaJogo.setMinimumSize(new Dimension(Constantes.LARGURA_TELA, Constantes.ALTURA_TELA));
+        painelControles.getPainelPrincipal().setMinimumSize(new Dimension(Constantes.LARGURA_TELA, Constantes.ALTURA_TELA));
 
         frame.pack();
         frame.setLocationRelativeTo(null); // centralizar na tela
