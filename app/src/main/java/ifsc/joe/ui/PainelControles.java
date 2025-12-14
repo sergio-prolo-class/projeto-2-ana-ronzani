@@ -223,10 +223,10 @@ public class PainelControles {
 
     private void configurarListeners() {
         // --- botões de criação ---
-        // posição inicial aleatória ou fixa (50, 50)
-        bCriaAldeao.addActionListener(e -> telaJogo.criarAldeao(50, 50));
-        bCriaArqueiro.addActionListener(e -> telaJogo.criarArqueiro(100, 50));
-        bCriaCavaleiro.addActionListener(e -> telaJogo.criarCavaleiro(150, 50));
+        // posição aleatória (-1, -1) para evitar sobreposição
+        bCriaAldeao.addActionListener(e -> telaJogo.criarAldeao(-1, -1));
+        bCriaArqueiro.addActionListener(e -> telaJogo.criarArqueiro(-1, -1));
+        bCriaCavaleiro.addActionListener(e -> telaJogo.criarCavaleiro(-1, -1));
 
         // --- botões de ação ---
         buttonCima.addActionListener(e -> telaJogo.movimentarPersonagens(Direcao.CIMA));

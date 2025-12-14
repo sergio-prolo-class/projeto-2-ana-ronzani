@@ -4,6 +4,7 @@ import ifsc.joe.domain.Constantes;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.api.Guerreiro;
 import ifsc.joe.domain.api.Coletador;
+import ifsc.joe.enums.TipoRecurso;
 
 import java.util.Set;
 
@@ -56,5 +57,11 @@ public class Aldeao extends Personagem implements Guerreiro, Coletador {
         // lógica de coleta: Aldeão coleta 5 unidades por vez
         int coletado = recurso.coletar(5);
         System.out.println("Aldeão coletou " + coletado + " de " + recurso.getTipo().name());
+        // Se o recurso for COMIDA, o aldeão recupera vida
+        if (recurso.getTipo() == TipoRecurso.COMIDA) {
+            // Recupera 1 ponto de vida para cada unidade de comida coletada
+            this.recuperarVida(coletado);
+            System.out.println("Aldeão recuperou " + coletado + " de vida. Vida atual: " + this.getVidaAtual());
+        }
     }
 }

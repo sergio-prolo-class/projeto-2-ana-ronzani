@@ -1,5 +1,6 @@
 package ifsc.joe.domain.impl;
 
+import ifsc.joe.domain.Constantes;
 import ifsc.joe.enums.TipoRecurso;
 
 import javax.swing.*;
@@ -49,9 +50,9 @@ public class Recurso {
 
     private Image carregarImagem(String nome) {
         try {
-            return new ImageIcon(Objects.requireNonNull(
-                    getClass().getClassLoader().getResource(nome + ".png")
+            Image originalImage = new ImageIcon(Objects.requireNonNull(                    getClass().getClassLoader().getResource(nome + ".png")
             )).getImage();
+            return originalImage.getScaledInstance(Constantes.TAMANHO_RECURSO, Constantes.TAMANHO_RECURSO, Image.SCALE_SMOOTH);
         } catch (NullPointerException e) {
             System.err.println("Erro ao carregar imagem do recurso: " + nome + ".png. Verifique o caminho.");
             return new ImageIcon().getImage();

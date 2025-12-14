@@ -1,5 +1,6 @@
 package ifsc.joe.ui;
 
+import ifsc.joe.domain.Constantes;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.api.Coletador;
 import ifsc.joe.domain.api.Guerreiro;
@@ -35,9 +36,12 @@ public class Tela extends JPanel {
         this.filtroSelecao = TipoSelecao.TODOS; // padrao: todos selecionados
 
         // adicionando alguns recursos pra teste
-        recursos.add(new Recurso(TipoRecurso.MADEIRA, 50, 50, 100));
-        recursos.add(new Recurso(TipoRecurso.OURO, 300, 150, 50));
-        recursos.add(new Recurso(TipoRecurso.COMIDA, 500, 50, 200));
+        recursos.add(new Recurso(TipoRecurso.MADEIRA, 50, 50, 200));
+        recursos.add(new Recurso(TipoRecurso.MADEIRA, 150, 250, 150));
+        recursos.add(new Recurso(TipoRecurso.OURO, 300, 150, 100));
+        recursos.add(new Recurso(TipoRecurso.OURO, 600, 350, 75));
+        recursos.add(new Recurso(TipoRecurso.COMIDA, 500, 50, 300));
+        recursos.add(new Recurso(TipoRecurso.COMIDA, 100, 400, 250));
     }
 
     /**
@@ -77,27 +81,61 @@ public class Tela extends JPanel {
      * @param x coordenada X
      * @param y coordenada Y
      */
+    /**
+     * Cria um personagem nas coordenadas X e Y, desenha-o neste JPanel
+     * e adiciona o mesmo na lista de aldeoes
+     *
+     * @param x coordenada X (se -1, será aleatória)
+     * @param y coordenada Y (se -1, será aleatória)
+     */
     public void criarAldeao(int x, int y) {
-        adicionarPersonagem(new Aldeao(x,y));
+        int finalX = (x == -1) ? gerarCoordenadaAleatoriaX() : x;
+        int finalY = (y == -1) ? gerarCoordenadaAleatoriaY() : y;
+        adicionarPersonagem(new Aldeao(finalX, finalY));
     }
 
     /**
      * cria um arqueiro nas coordenadas X e Y
      * @param x coordenada X
      * @param y coordenada Y
+     *@param x coordenada X (se -1, será aleatória)
+     *@param y coordenada Y (se -1, será aleatória)
      */
+
     public void criarArqueiro(int x,int y){
-        adicionarPersonagem(new Arqueiro(x,y));
+        int finalX = (x == -1) ? gerarCoordenadaAleatoriaX() : x;
+        int finalY = (y == -1) ? gerarCoordenadaAleatoriaY() : y;
+        adicionarPersonagem(new Arqueiro(finalX, finalY));
     }
 
     /**
      * cria um cavaleiro nas coordenadas X e Y
      * @param x coordenada X
      * @param y coordenada Y
+     * @param x coordenada X (se -1, será aleatória)
+     * @param y coordenada Y (se -1, será aleatória)
      */
     public void criarCavaleiro(int x,int y){
-        adicionarPersonagem(new Cavaleiro(x,y));
+
+        int finalX = (x == -1) ? gerarCoordenadaAleatoriaX() : x;
+        int finalY = (y == -1) ? gerarCoordenadaAleatoriaY() : y;
+        adicionarPersonagem(new Cavaleiro(finalX, finalY));
     }
+
+    /**
+     * Gera uma coordenada X aleatória dentro dos limites da tela.
+     */
+    private int gerarCoordenadaAleatoriaX() {
+        // Garante que o personagem caiba na tela (largura da tela - tamanho do personagem)
+        return (int) (Math.random() * (this.getWidth() - Constantes.TAMANHO_PERSONAGEM));
+    }
+
+    /**
+     * Gera uma coordenada Y aleatória dentro dos limites da tela.
+     */
+    private int gerarCoordenadaAleatoriaY() {
+        // Garante que o personagem caiba na tela (altura da tela - tamanho do personagem)
+        return (int) (Math.random() * (this.getHeight() - Constantes.TAMANHO_PERSONAGEM));    }
 
     /**
      * att as coordenadas X ou Y de todos os personagens

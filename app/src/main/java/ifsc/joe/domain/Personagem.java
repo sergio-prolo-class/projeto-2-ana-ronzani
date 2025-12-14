@@ -199,8 +199,9 @@ public abstract class Personagem {
     public int getAlcanceAtaque() { return alcanceAtaque; }
     public double getChanceEsquiva() { return chanceEsquiva; }
     public boolean estaMorto() { return vidaAtual <= 0; }
+    public void recuperarVida(int valor) {
+        this.vidaAtual = Math.min(this.vidaAtual + valor, this.vidaMaxima);}
     public boolean estaAtacando() { return atacando; }
-
     // Métodos Abstratos ou que serão sobrescritos (opcionalmente)
     // public abstract void atacar(Set<Personagem> alvos);
 }
