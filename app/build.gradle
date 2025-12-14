@@ -8,12 +8,14 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
-    id 'io.github.file5.guidesigner' version '1.0.2'
+    // id 'io.github.file5.guidesigner' version '1.0.2' // Removido para teste de compatibilidade
 }
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    // Adicionar repositório específico para dependências do IntelliJ
+    maven { url 'https://repo.maven.apache.org/maven2' }
 }
 
 dependencies {
@@ -21,11 +23,11 @@ dependencies {
     testImplementation libs.junit
 
     // This dependency is used by the application.
-    implementation libs.guava
+    // implementation libs.guava // Removido para teste de compatibilidade
 
-    // Para execução do formulário via Gradle
-    implementation "com.jetbrains.intellij.java:java-gui-forms-rt:+"
-    implementation "com.jgoodies:forms:1.1-preview"
+    // Dependências de GUI Designer removidas para isolar o erro de build
+    // implementation "com.jetbrains.intellij.java:java-gui-forms-rt:222.4550.1"
+    // implementation "com.jgoodies:forms:1.1-preview"
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

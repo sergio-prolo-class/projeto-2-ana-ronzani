@@ -9,7 +9,7 @@ import java.util.Set;
 public class Arqueiro extends Personagem implements Guerreiro {
 
     public Arqueiro(int x, int y) {
-        super(x, y, "aldeao",
+        super(x, y, "arqueiro",
                 Constantes.ARQUEIRO_VIDA_MAXIMA,
                 Constantes.ARQUEIRO_ATAQUE,
                 Constantes.ARQUEIRO_ALCANCE_ATAQUE,

@@ -11,7 +11,7 @@ public class Cavaleiro extends Personagem implements Guerreiro, ComMontaria {
 
     // Constantes de Cavaleiro
     public Cavaleiro(int x, int y) {
-        super(x, y, "aldeao",
+        super(x, y, "cavaleiro",
                 Constantes.CAVALEIRO_VIDA_MAXIMA,
                 Constantes.CAVALEIRO_ATAQUE,
                 Constantes.CAVALEIRO_ALCANCE_ATAQUE,
