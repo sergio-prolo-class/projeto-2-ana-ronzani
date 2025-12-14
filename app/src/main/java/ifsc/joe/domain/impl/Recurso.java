@@ -17,7 +17,6 @@ public class Recurso {
         this.tipo = tipo;
         this.posX = x;
         this.posY = y;
-        this.quantidade = quantidade;
         this.icone = carregarImagem(tipo.name().toLowerCase());
     }
 

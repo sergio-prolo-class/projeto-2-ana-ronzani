@@ -36,12 +36,12 @@ public class Tela extends JPanel {
         this.filtroSelecao = TipoSelecao.TODOS; // padrao: todos selecionados
 
         // adicionando alguns recursos pra teste
-        recursos.add(new Recurso(TipoRecurso.MADEIRA, 50, 50, 200));
-        recursos.add(new Recurso(TipoRecurso.MADEIRA, 150, 250, 150));
-        recursos.add(new Recurso(TipoRecurso.OURO, 300, 150, 100));
+        recursos.add(new Recurso(TipoRecurso.MADEIRA, 50, 50, 2));
+        recursos.add(new Recurso(TipoRecurso.MADEIRA, 150, 250, 5));
+        recursos.add(new Recurso(TipoRecurso.OURO, 300, 150, 10));
         recursos.add(new Recurso(TipoRecurso.OURO, 600, 350, 75));
-        recursos.add(new Recurso(TipoRecurso.COMIDA, 500, 50, 300));
-        recursos.add(new Recurso(TipoRecurso.COMIDA, 100, 400, 250));
+        recursos.add(new Recurso(TipoRecurso.COMIDA, 500, 50, 8));
+        recursos.add(new Recurso(TipoRecurso.COMIDA, 100, 400, 25));
     }
 
     /**
