@@ -1,77 +1,68 @@
-## ⚔️ Java of Empires - Projeto de Programação Orientada a Objetos
+# Projeto 2: Java of Empires
 
-Este projeto é uma implementação do jogo "Java of Empires", desenvolvido como parte da disciplina de **Programação Orientada a Objetos (POO)**. O objetivo foi aplicar e consolidar conceitos avançados de POO, como herança, polimorfismo e interfaces, para criar um simulador de estratégia em tempo real robusto e funcional.
+Este projeto é a minha implementação para a segunda avaliação da disciplina de Programação Orientada a Objetos. O objetivo foi desenvolver um jogo de estratégia em tempo real (RTS) simples, aplicando conceitos fundamentais de POO como herança, polimorfismo e o uso de interfaces em um ambiente gráfico interativo construído com Java Swing.
 
------
+## Minha Visão Sobre o Desenvolvimento
 
-## 🚀 Funcionalidades Implementadas
+Ao desenvolver este projeto, meu foco foi criar uma arquitetura de software simples, limpa e escalável. Acredito que a base para um bom código é a organização e a clareza. Por isso, estruturei o projeto de forma a separar as responsabilidades, com pacotes distintos para a lógica de domínio (personagens, regras), a interface do usuário (telas, botões) e as enumerações.
 
-O projeto foi estruturado para atender a todos os requisitos do escopo, garantindo uma arquitetura de código clara e uma experiência de jogo completa em termos de mecânicas.
+A utilização de uma classe `Personagem` abstrata foi um pilar central, permitindo-me definir um "contrato" comum para todas as unidades do jogo. Isso simplificou a adição de novas classes como `Arqueiro` e `Cavaleiro`, que herdam o comportamento básico e implementam suas especializações através de interfaces.
 
-### 1\. Arquitetura Orientada a Objetos
+## Funcionalidades Implementadas
 
-* **Herança e Polimorfismo:** A classe abstrata `Personagem` serve como base para todos os tipos de unidades (`Aldeão`, `Arqueiro`, `Cavaleiro`), centralizando o estado comum (vida, posição, velocidade).
-* **Interfaces para Herança Múltipla de Tipo:** Foram criadas interfaces como `Guerreiro`, `Coletador` e `ComMontaria` para definir capacidades específicas. Isso permite que um personagem implemente múltiplos papéis (ex: o `Aldeão` é `Guerreiro` e `Coletador`).
+A seguir, detalho as funcionalidades que implementei no projeto, indo além dos requisitos básicos e focando em criar uma experiência de jogo mais completa e dinâmica.
 
-### 2\. Gerenciamento de Unidades e Combate
+### 1. Arquitetura de Classes e Herança
 
-* **Criação de Unidades:** Botões de criação implementados para todos os tipos de personagens, adicionando-os dinamicamente ao mapa.
-* **Sistema de Ataque Completo:**
-    * Botão **"Atacar"** funcional para todos os personagens que implementam a interface `Guerreiro`.
-    * Dano aplicado com base no atributo `ataque` de cada unidade.
-    * O ataque é simultâneo contra todos os inimigos dentro do alcance.
-* **Alcance de Ataque Diferenciado:** Cada unidade possui um `alcanceAtaque` distinto:
-    * `Aldeão`: 50px
-    * `Arqueiro`: 150px
-    * `Cavaleiro`: 75px
-    * O dano é aplicado somente se a distância entre as unidades for $\le$ ao alcance.
-* **Efeito Visual de Ataque:** Implementada a troca de sprite para simular a animação de ataque, conforme solicitado.
-* **Sistema de Esquiva (Dodge):**
-    * Cada personagem possui um atributo `chanceEsquiva` (ex: Aldeão: 10%, Arqueiro: 25%, Cavaleiro: 15%).
-    * Utiliza a função `Random` para determinar se o ataque será esquivado, e, em caso positivo, o dano não é aplicado.
-* **Remoção de Unidades Mortas:**
-    * Verificação da vida após cada ataque ($vida \le 0$).
-    * O personagem é removido da coleção, suas referências são limpas, e um contador de baixas por tipo é mantido e exibido no terminal.
+Para evitar a duplicação de código e criar um modelo coeso, utilizei uma hierarquia de classes bem definida:
 
-### 3\. Interface e Controles
+- **Classe Abstrata `Personagem`**: Funciona como a base para todas as unidades. Centralizei nela os atributos comuns a todos, como `vida`, `ataque`, `velocidade`, `posição (x, y)`, `alcanceAtaque` e `chanceEsquiva`. Métodos essenciais como `mover()`, `sofrerDano()` e `desenhar()` também foram implementados aqui, garantindo um comportamento padrão que pode ser herdado ou sobrescrito.
 
-* **Filtros de Seleção por Tipo:** **Radio buttons** permitem filtrar os comandos de movimento e ataque por tipo de unidade ("Todos", "Aldeão", "Arqueiro", "Cavaleiro"), utilizando o operador `instanceof` para a filtragem.
-* **Barra de Vida Visual:** Um retângulo colorido é desenhado acima de cada personagem, com largura proporcional à vida atual. A cor muda dinamicamente de acordo com a porcentagem de vida (verde, amarelo, vermelho).
-* **Sistema de Coleta de Recursos:**
-    * Botão **"Coletar"** funcional.
-    * Recursos (`COMIDA`, `OURO`, `MADEIRA`) são desenhados no mapa.
-    * Apenas personagens que implementam a interface `Coletador` (o `Aldeão`) podem realizar a coleta, verificando a proximidade com o recurso.
+- **Classes Concretas `Arqueiro` e `Cavaleiro`**: Estas classes estendem `Personagem`, herdando todos os seus atributos e comportamentos. Elas representam as novas unidades do jogo, cada uma com seus próprios status definidos na classe `Constantes`.
 
-### 4\. Configuração e Manutenção
+- **Interfaces `Guerreiro`, `Coletador` e `ComMontaria`**: Para adicionar comportamentos específicos, optei por interfaces. Isso me permitiu aplicar uma forma de "herança múltipla de tipo".
+    - `Guerreiro`: Define o contrato `atacar(Set<Personagem> alvos)`, implementado por todas as unidades de combate (`Aldeao`, `Arqueiro`, `Cavaleiro`).
+    - `Coletador`: Define o contrato `coletar(Recurso recurso)`, implementado apenas pelo `Aldeao`.
+    - `ComMontaria`: É uma interface de marcação, aplicada ao `Cavaleiro`, que permite identificá-lo para futuras implementações, como bônus de velocidade.
 
-* **Centralização de Constantes:** Criada a classe `Constantes` para centralizar todos os valores de *hardcode* (vida inicial, ataque, velocidade, alcance). Isso facilita o balanceamento e a manutenção do jogo.
+### 2. Sistema de Combate Abrangente
 
------
+O sistema de combate foi projetado para ser dinâmico e estratégico, incorporando várias mecânicas.
 
-## ⚠️ Erro de Execução Atual
+- **Ataque em Área**: Ao acionar o botão "Atacar", cada personagem do tipo `Guerreiro` ataca simultaneamente todos os inimigos que estão dentro do seu raio de ação. Isso cria um combate mais fluido e realista para um RTS.
 
-Embora todas as funcionalidades tenham sido implementadas, o projeto está enfrentando um problema de execução que impede a abertura correta da janela do jogo.
+- **Alcance de Ataque Individual**: Cada tipo de personagem possui um `alcanceAtaque` distinto, centralizado na classe `Constantes`. O `Arqueiro` tem o maior alcance (150px), o `Cavaleiro` um alcance intermediário (75px) e o `Aldeao` um alcance curto (50px). A lógica de ataque verifica a distância euclidiana entre o atacante e o alvo antes de aplicar o dano.
 
-O *build* do Gradle é bem-sucedido, mas a aplicação falha ao tentar iniciar a interface gráfica :(.
+- **Mecânica de Esquiva**: Para adicionar um elemento de sorte e variedade ao combate, implementei um sistema de esquiva. Cada personagem tem um atributo `chanceEsquiva` (ex: Arqueiro tem 25%). Antes de sofrer dano, o personagem tem a chance de se esquivar completamente do ataque. Quando isso ocorre, uma mensagem "ESQUIVOU!" é exibida no terminal para feedback.
 
+- **Gerenciamento de Morte e Placar**: Após cada rodada de ataques, o sistema verifica a vida de todos os personagens. Se a vida de um personagem for menor ou igual a zero, ele é removido da coleção de personagens ativos no jogo. Implementei um contador de baixas (`Map<Class<? extends Personagem>, Integer> baixas`) que registra quantos personagens de cada tipo foram eliminados, exibindo uma mensagem no terminal a cada baixa.
 
------
+### 3. Interface Gráfica e Experiência do Usuário
 
-## ⚙️ Como Executar
+Busquei criar uma interface funcional e informativa.
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/sergio-prolo-class/projeto-2-ana-ronzani.git
-    ```
-2.  **Navegue até o diretório raiz do projeto:**
-    ```bash
-    cd projeto-2-ana-ronzani
-    ```
-3.  **Execute o build:**
-    ```bash
-    ./gradlew build
-    ```
-4.  **Execute a aplicação:**
-    ```bash
-    ./gradlew run
-    ```
+- **Barras de Vida Dinâmicas**: Desenvolvi um sistema de barras de vida que são desenhadas acima de cada personagem. A largura da barra é proporcional à vida atual em relação à vida máxima. Além disso, a cor da barra muda dinamicamente para fornecer um feedback visual rápido sobre o estado da unidade:
+    - **Verde**: Vida entre 75% e 100%.
+    - **Amarelo**: Vida entre 25% e 75%.
+    - **Vermelho**: Vida abaixo de 25%.
+
+- **Filtro de Seleção de Unidades**: Para dar ao jogador controle estratégico, implementei um sistema de filtros usando `JRadioButton`. O jogador pode escolher aplicar comandos (movimento e ataque) a:
+    - **Todos**: Afeta todas as unidades.
+    - **Aldeão**: Afeta apenas os Aldeões.
+    - **Arqueiro**: Afeta apenas os Arqueiros.
+    - **Cavaleiro**: Afeta apenas os Cavaleiros.
+
+  Internamente, utilizei o operador `instanceof` para filtrar a coleção de personagens antes de aplicar a ação, garantindo que apenas as unidades selecionadas respondam ao comando.
+
+### 4. Coleta de Recursos
+
+Implementei um sistema básico de coleta de recursos para expandir a jogabilidade.
+
+- **Recursos no Mapa**: O mapa contém recursos de `COMIDA`, `OURO` e `MADEIRA`, cada um com uma quantidade limitada.
+- **Ação de Coleta**: O `Aldeao`, por ser um `Coletador`, pode executar a ação de coletar. Ao acionar o botão "Coletar", ele verifica o recurso mais próximo e, se estiver dentro do alcance, coleta uma quantidade definida. Se o recurso for `COMIDA`, o Aldeão regenera parte de sua vida, adicionando uma camada extra de estratégia.
+
+### 5. Centralização de Configurações
+
+Para facilitar o balanceamento e a manutenção do jogo, criei a classe `Constantes.java`. Esta classe final centraliza todos os valores "mágicos" do código, como os atributos de cada personagem (vida, ataque, velocidade, etc.), configurações da tela e parâmetros de jogabilidade. Isso permite ajustar o balanceamento do jogo de forma rápida e segura, sem a necessidade de procurar e alterar valores espalhados pelo código-fonte.
+
+![readme.png](app/src/main/resources/readme.png)
