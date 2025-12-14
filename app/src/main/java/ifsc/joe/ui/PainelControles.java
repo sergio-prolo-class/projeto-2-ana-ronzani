@@ -41,7 +41,10 @@ public class PainelControles {
     public PainelControles() {
         // A inicialização de telaJogo é feita em createUIComponents()
         // O UI Designer chama createUIComponents() antes do construtor.
+        // quando instanciado manualmente, precisamos chamar createUIComponents() explicitamente
+        createUIComponents();
     }
+
     // Construtor para uso manual (sem UI Designer)
     public PainelControles(Tela telaJogo) {
         this.telaJogo = telaJogo;
