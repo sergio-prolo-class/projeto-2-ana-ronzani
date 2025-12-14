@@ -11,6 +11,10 @@ public final class Constantes {
     public static final int VELOCIDADE_MOVIMENTO_PADRAO = 10;
     public static final int ALCANCE_COLETA = 50; // distância máxima para coletar
 
+    // Configurações de tamanho de imagem
+    public static final int TAMANHO_PERSONAGEM = 32; // Tamanho padrão 32x32
+    public static final int TAMANHO_RECURSO = 32; // Tamanho padrão 32x32
+
     //Configurações de aldeão
     public static final int ALDEAO_VIDA_MAXIMA = 100;
     public static final int ALDEAO_ATAQUE = 10;
