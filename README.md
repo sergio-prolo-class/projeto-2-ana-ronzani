@@ -66,3 +66,6 @@ Implementei um sistema básico de coleta de recursos para expandir a jogabilidad
 Para facilitar o balanceamento e a manutenção do jogo, criei a classe `Constantes.java`. Esta classe final centraliza todos os valores "mágicos" do código, como os atributos de cada personagem (vida, ataque, velocidade, etc.), configurações da tela e parâmetros de jogabilidade. Isso permite ajustar o balanceamento do jogo de forma rápida e segura, sem a necessidade de procurar e alterar valores espalhados pelo código-fonte.
 
 ![readme.png](app/src/main/resources/readme.png)
+
+### Aluna: Ana Clara Teixeira Ronzani (solo)
+#### Contato: ana.ct2006@aluno.ifsc.edu.br
